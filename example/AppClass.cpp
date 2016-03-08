@@ -1,7 +1,7 @@
 #include "AppClass.h"
 void AppClass::InitWindow(String a_sWindowName)
 {
-	super::InitWindow("Sandbox"); // Window Name
+	super::InitWindow("E06 DWE IGM"); // Window Name
 
 	// Set the clear color based on Microsoft's CornflowerBlue (default in XNA)
 	//if this line is in Init Application it will depend on the .cfg file, if it
@@ -11,46 +11,60 @@ void AppClass::InitWindow(String a_sWindowName)
 
 void AppClass::InitVariables(void)
 {
-	m_selection = std::pair<int, int>(-1, -1);
-	//Set the camera at a position other than the default
-	m_pCameraMngr->SetPositionTargetAndView(vector3(0.0f, 2.5f, 12.0f), vector3(0.0f, 2.5f, 11.0f), REAXISY);
+	//m_selection = std::pair<int, int>(-1, -1);
+	////Set the camera at a position other than the default
+	//m_pCameraMngr->SetPositionTargetAndView(vector3(0.0f, 2.5f, 12.0f), vector3(0.0f, 2.5f, 11.0f), REAXISY);
 
-	m_pLightMngr->SetColor(REWHITE, 0);
-	m_pLightMngr->SetIntensity(0.1f, 0);
-	m_pLightMngr->SetColor(REWHITE, 1);
-	m_pLightMngr->SetIntensity(0.5f, 1);
-	m_pLightMngr->SetPosition(vector3(0.0f, 1.0f,-1.0f), 1);
+	//m_pLightMngr->SetColor(REWHITE, 0);
+	//m_pLightMngr->SetIntensity(0.1f, 0);
+	//m_pLightMngr->SetColor(REWHITE, 1);
+	//m_pLightMngr->SetIntensity(0.5f, 1);
+	//m_pLightMngr->SetPosition(vector3(0.0f, 1.0f,-1.0f), 1);
 
-	//Load a model onto the Mesh manager
-	//m_pMeshMngr->LoadModel("tests\\Cubev.fbx", "Unikitty");
-	int nCubes = 10;
-	vector3 v3Start(-nCubes/2.0f, 0.0f, -nCubes / 2.0f);
-	m_pMeshMngr->LoadModel("Cube.obj", "ElCubo");
-	m_pMeshMngr->SetShaderProgramByName("ElCubo", "Phong");
-	for (uint n = 0; n < nCubes; n++)
-	{
-		if (v3Start != vector3(0.0f))
-		{
-			String sName = "Cube_" + std::to_string(n);
-			m_pMeshMngr->LoadModel("Cube.obj", sName, false, glm::translate(v3Start));
-			m_pMeshMngr->SetShaderProgramByName(sName, "Phong");
-		}
-		v3Start += vector3(1.0f, 0.0f, 1.0f);
-	}
+	////Load a model onto the Mesh manager
+	////m_pMeshMngr->LoadModel("tests\\Cubev.fbx", "Unikitty");
+	//int nCubes = 10;
+	//vector3 v3Start(-nCubes/2.0f, 0.0f, -nCubes / 2.0f);
+	//m_pMeshMngr->LoadModel("Cube.obj", "ElCubo");
+	//m_pMeshMngr->SetShaderProgramByName("ElCubo", "Phong");
+	//for (uint n = 0; n < nCubes; n++)
+	//{
+	//	if (v3Start != vector3(0.0f))
+	//	{
+	//		String sName = "Cube_" + std::to_string(n);
+	//		m_pMeshMngr->LoadModel("Cube.obj", sName, false, glm::translate(v3Start));
+	//		m_pMeshMngr->SetShaderProgramByName(sName, "Phong");
+	//	}
+	//	v3Start += vector3(1.0f, 0.0f, 1.0f);
+	//}
 
-	m_pCameraMngr->SetPosition(vector3(0.0f, 0.0f, 35.0f));
+	m_pCameraMngr->SetPositionTargetAndView(
+		vector3(0.0f, 2.5f, 12.0f),
+		vector3(0.0f, 2.5f, 11.0f),
+		vector3(0.0f, 1.0f, 0.0f));
 
-	srand(time(NULL));
-	m_nObjects = rand() % 23 + 5;
-
-	vector3 v3Start = vector3(-m_nObjects, 0.0f, 0.0f);
-	vector3 v3End = vector3(m_nObjects, 0.0f, 0.0f);
+	m_nObjects = 10;
 
 	m_pSphere = new PrimitiveClass[m_nObjects];
 	m_pMatrix = new matrix4[m_nObjects];
 
-	//for (int i = 0; i < )  WE ARE ON STEP 13
+	vector3 v3Start(-static_cast<float>(m_nObjects),0.0f,0.0f);
+	vector3 v3End(static_cast<float>(m_nObjects), 0.0f, 0.0f);
+	vector3 v3Current = glm::lerp(v3Start,v3End,1.0f);
 
+	for (uint i = 0; i < m_nObjects; i++)
+	{
+		float fPercent = MapValue(
+			static_cast<float>(i),				//value to change
+			0.0f,								//original min
+			static_cast<float>(m_nObjects) -1,		//original max
+			0.0f,								//new min
+			1.0f								//new max
+			);
+		m_pSphere[i].GenerateSphere(0.5f, 5, RERED);
+		vector3 v3Current = glm::lerp(v3Start, v3End, fPercent);
+		m_pMatrix[i] = glm::translate(v3Current);
+	}
 }
 
 void AppClass::Update(void)
@@ -110,7 +124,14 @@ void AppClass::Display(void)
 		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
 		break;
 	}
-	
+
+	matrix4 mProjection = m_pCameraMngr->GetProjectionMatrix();
+	matrix4 mView = m_pCameraMngr->GetViewMatrix();
+
+	for (uint i = 0; i < m_nObjects; i++)
+	{
+		m_pSphere[i].Render(mProjection, mView, m_pMatrix[i]);
+	}
 	m_pMeshMngr->Render(); //renders the render list
 
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
@@ -118,5 +139,15 @@ void AppClass::Display(void)
 
 void AppClass::Release(void)
 {
+	if (m_pSphere != nullptr) 
+	{
+		delete[] m_pSphere; //new[] delete[], new()->delete
+		m_pSphere = nullptr;
+	}
+	if (m_pMatrix != nullptr)
+	{
+		delete[] m_pMatrix; //new[] delete[], new()->delete
+		m_pMatrix = nullptr;
+	}
 	super::Release(); //release the memory of the inherited fields
 }
