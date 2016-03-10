@@ -13,6 +13,7 @@ using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 class AppClass : public ReEngAppClass
 {
 	vector3 m_v3Rotation = vector3(0.0f);
+	matrix4 m_m4Orientation = IDENTITY_M4;
 public:
 	typedef ReEngAppClass super;
 
