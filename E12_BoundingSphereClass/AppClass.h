@@ -15,6 +15,14 @@ class AppClass : public ReEngAppClass
 {
 	vector3 m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
 	vector3 m_v3O2 = vector3( 2.5f, 0.0f, 0.0f);
+
+	PrimitiveClass* m_pSphere1 = nullptr;
+	PrimitiveClass* m_pSphere2 = nullptr;
+	vector3 m_v3Center1;
+	vector3 m_v3Center2;
+	float m_fRadius1 = 0.0f;
+	float m_fRadius2 = 0.0f;
+
 public:
 	typedef ReEngAppClass super;
 	/*

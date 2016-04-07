@@ -18,6 +18,78 @@ void AppClass::InitVariables(void)
 	//Load Models
 	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
+	
+	std::vector<vector3>vertexList1 = m_pMeshMngr->GetVertexList("Steve");
+	uint nVertexCount = vertexList1.size();
+
+	std::vector<vector3>vertexList2 = m_pMeshMngr->GetVertexList("Creeper");
+	uint nVertexCount2 = vertexList2.size();
+
+	vector3 v3Min1;
+	vector3 v3Max1;
+
+	vector3 v3Min2;
+	vector3 v3Max2;
+	
+	if (nVertexCount > 0)
+	{
+		v3Min1 = vertexList1[0];
+		v3Max1 = vertexList1[0];
+	}
+
+	for (uint i = 0; i < nVertexCount; i++)
+	{
+		if (vertexList1[i].x > v3Max1.x)
+			v3Max1.x = vertexList1[i].x;
+		else if (vertexList1[i].x < v3Min1.x)
+			v3Min1.x = vertexList1[i].x;
+
+		if (vertexList1[i].y > v3Max1.y)
+			v3Max1.y = vertexList1[i].y;
+		else if (vertexList1[i].y < v3Min1.y)
+			v3Min1.y = vertexList1[i].y;
+
+		if (vertexList1[i].z > v3Max1.z)
+			v3Max1.z = vertexList1[i].z;
+		else if (vertexList1[i].z < v3Min1.z)
+			v3Min1.z = vertexList1[i].z;
+	}
+
+	m_v3Center1 = (v3Max1 + v3Min1) / 2.0f;
+	float fRadius = glm::distance(m_v3Center1, v3Max1);
+
+	m_pSphere1 = new PrimitiveClass();
+	m_pSphere1->GenerateSphere(fRadius, 10, REGREEN);
+
+	if (nVertexCount2 > 0)
+	{
+		v3Min2 = vertexList2[0];
+		v3Max2 = vertexList2[0];
+	}
+
+	for (uint i = 0; i < nVertexCount2; i++)
+	{
+		if (vertexList2[i].x > v3Max2.x)
+			v3Max2.x = vertexList2[i].x;
+		else if (vertexList2[i].x < v3Min2.x)
+			v3Min2.x = vertexList2[i].x;
+
+		if (vertexList2[i].y > v3Max2.y)
+			v3Max2.y = vertexList2[i].y;
+		else if (vertexList2[i].y < v3Min2.y)
+			v3Min2.y = vertexList2[i].y;
+
+		if (vertexList2[i].z > v3Max2.z)
+			v3Max2.z = vertexList2[i].z;
+		else if (vertexList2[i].z < v3Min2.z)
+			v3Min2.z = vertexList2[i].z;
+	}
+
+	m_v3Center2 = (v3Max2 + v3Min2) / 2.0f;
+	float fRadius = glm::distance(m_v3Center2, v3Max2);
+
+	m_pSphere2 = new PrimitiveClass();
+	m_pSphere2->GenerateSphere(fRadius, 10, REGREEN);
 }
 
 void AppClass::Update(void)
@@ -73,6 +145,12 @@ void AppClass::Display(void)
 		break;
 	}
 	
+	matrix4 m4Model = m_pMeshMngr->GetModelMatrix("Steve");
+	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
+	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
+	
+	m_pSphere1->Render(m4Projection,m4View,m4Model);
+
 	m_pMeshMngr->Render(); //renders the render list
 
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
@@ -80,5 +158,16 @@ void AppClass::Display(void)
 
 void AppClass::Release(void)
 {
+	if (m_pSphere1 != nullptr)
+	{
+		delete m_pSphere1;
+		m_pSphere1 = nullptr;
+	}
+
+	if (m_pSphere2 != nullptr)
+	{
+		delete m_pSphere2;
+		m_pSphere2 = nullptr;
+	}
 	super::Release(); //release the memory of the inherited fields
 }
