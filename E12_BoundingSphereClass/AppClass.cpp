@@ -56,10 +56,10 @@ void AppClass::InitVariables(void)
 	}
 
 	m_v3Center1 = (v3Max1 + v3Min1) / 2.0f;
-	float fRadius = glm::distance(m_v3Center1, v3Max1);
+	float fRadius1 = glm::distance(m_v3Center1, v3Max1);
 
 	m_pSphere1 = new PrimitiveClass();
-	m_pSphere1->GenerateSphere(fRadius, 10, REGREEN);
+	m_pSphere1->GenerateSphere(fRadius1, 10, REGREEN);
 
 	if (nVertexCount2 > 0)
 	{
@@ -86,10 +86,10 @@ void AppClass::InitVariables(void)
 	}
 
 	m_v3Center2 = (v3Max2 + v3Min2) / 2.0f;
-	float fRadius = glm::distance(m_v3Center2, v3Max2);
+	float fRadius2 = glm::distance(m_v3Center2, v3Max2);
 
 	m_pSphere2 = new PrimitiveClass();
-	m_pSphere2->GenerateSphere(fRadius, 10, REGREEN);
+	m_pSphere2->GenerateSphere(fRadius2, 10, REGREEN);
 }
 
 void AppClass::Update(void)
@@ -145,7 +145,7 @@ void AppClass::Display(void)
 		break;
 	}
 	
-	matrix4 m4Model = m_pMeshMngr->GetModelMatrix("Steve");
+	matrix4 m4Model = m_pMeshMngr->GetModelMatrix("Steve")*glm::translate(m_v3Center1);
 	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
 	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
 	
