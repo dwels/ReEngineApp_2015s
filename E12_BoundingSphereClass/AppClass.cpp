@@ -109,6 +109,19 @@ void AppClass::Update(void)
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall), "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
 
+	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
+	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
+
+	m_m4Steve = m_pMeshMngr->GetModelMatrix("Steve") * glm::translate(m_v3Center1);
+	m_pMeshMngr->AddSphereToQueue(m_m4Steve * glm::scale(vector3(m_fRadius1 * 2.0f)),RERED,WIRE);
+	////m_pSphere1->Render(m4Projection, m4View, m4Model);
+	//m_pMeshMngr->AddSphereToQueue(m4Model, RERED, WIRE);
+
+	m_m4Creeper = m_pMeshMngr->GetModelMatrix("Creeper") * glm::translate(m_v3Center2);
+	m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), RERED, WIRE);
+	//m_pSphere2->Render(m4Projection, m4View, m4Model);
+	//m_pMeshMngr->AddSphereToQueue(m4Model, RERED, WIRE);
+
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
@@ -117,9 +130,15 @@ void AppClass::Update(void)
 	bool bAreColliding = false;
 
 	//Collision check goes here
-	m_pMeshMngr->Print("x:" + std::to_string( m_v3Center1.x ) + " ", RERED);
-	m_pMeshMngr->Print("y:" + std::to_string(m_v3Center1.y) + " ", RERED);
-	m_pMeshMngr->Print("z:" + std::to_string(m_v3Center1.z) + " ", RERED);
+	vector3 v3Temp = vector3(m_m4Steve * vector4(m_v3Center1, 1.0f));
+	vector3 v3Temp2 = vector3(m_m4Creeper* vector4(m_v3Center2, 1.0f));
+
+	if (glm::distance(v3Temp, v3Temp2) < m_fRadius1 + m_fRadius2)
+		bAreColliding = true;
+
+	m_pMeshMngr->Print("x:" + std::to_string(v3Temp.x ) + " ", RERED);
+	m_pMeshMngr->Print("y:" + std::to_string(v3Temp.y) + " ", RERED);
+	m_pMeshMngr->Print("z:" + std::to_string(v3Temp.z) + " ", RERED);
 	m_pMeshMngr->PrintLine("");
 
 	//print info into the console
@@ -155,23 +174,6 @@ void AppClass::Display(void)
 		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
 		break;
 	}
-	
-	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
-	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
-
-	matrix4 m4Model =
-		m_pMeshMngr->GetModelMatrix("Steve") *
-		glm::translate(m_v3Center1) *
-		glm::scale(vector3(m_fRadius1 * 2.0f));
-	//m_pSphere1->Render(m4Projection, m4View, m4Model);
-	m_pMeshMngr->AddSphereToQueue(m4Model, RERED, WIRE);
-
-	m4Model =
-		m_pMeshMngr->GetModelMatrix("Creeper") *
-		glm::translate(m_v3Center2) *
-		glm::scale(vector3(m_fRadius2 * 2.0f));
-	//m_pSphere2->Render(m4Projection, m4View, m4Model);
-	m_pMeshMngr->AddSphereToQueue(m4Model, RERED, WIRE);
 
 	m_pMeshMngr->Render(); //renders the render list
 
