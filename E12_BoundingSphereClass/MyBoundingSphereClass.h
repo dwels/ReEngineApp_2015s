@@ -16,6 +16,10 @@ class MyBoundingSphereClass
 	vector3 m_v3Center = vector3(0.0f); //Will store the center point of the Sphere Class
 	vector3 m_v3Min = vector3(0.0f); //Will store the minimum vector of the Sphere Class
 	vector3 m_v3Max = vector3(0.0f); //Will store the maximum vector of the Sphere Class
+	uint nVertexCount;
+	std::vector<vector3> vertexList; //Will store the verticies from the shape
+	PrimitiveClass* m_pSphere = nullptr;	//Will store the sphere itself
+	vector3 v3Position = vector3(0);
 
 public:
 	/*
@@ -89,6 +93,10 @@ public:
 	OUTPUT: bool -> check of the collision
 	*/
 	bool IsColliding(MyBoundingSphereClass* const a_pOther);
+
+	void UpdatePosition(vector3 _v3Input);
+	matrix4 GetModelMatrix(void);
+	vector3 GetPosition(void);
 	
 private:
 	/*
