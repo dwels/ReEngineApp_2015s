@@ -1,25 +1,47 @@
 /*----------------------------------------------
 Programmer: Alberto Bobadilla (labigm@gmail.com)
-Date: 2015/09 (Last Modified on: 15/11)
+Date: 2015/09
 ----------------------------------------------*/
 #ifndef __APPLICATION_H_
 #define __APPLICATION_H_
 
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
+#include "MyBoundingSphereClass.h"
+#include "MyBoundingCubeClass.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
-	vector3 m_v3Rotation = vector3(0.0f);
-	matrix4 m_m4Orientation = IDENTITY_M4;
+	vector3 m_v3O1 = vector3(-2.5f, 0.0f, 0.0f);
+	vector3 m_v3O2 = vector3( 2.5f, 0.0f, 0.0f);
+
+	PrimitiveClass* m_pSphere1 = nullptr;
+	vector3 m_v3Center1;
+	float m_fRadius1 = 0.0f;
+	matrix4 m_m4Steve;
+
+	PrimitiveClass* m_pSphere2 = nullptr;
+	vector3 m_v3Center2;
+	float m_fRadius2 = 0.0f;
+	matrix4 m_m4Creeper;
+	MyBoundingSphereClass* steveBO;
+	MyBoundingSphereClass* creeperBO;
+
+	MyBoundingCubeClass* m_pBox1;
+	MyBoundingCubeClass* m_pBox2;
+
+	PrimitiveClass* startPlat;
+	PrimitiveClass* player;
+
+	//matrix4 bigBox;
+
 public:
 	typedef ReEngAppClass super;
-
 	/*
 	USAGE: Constructor
-	ARGUMENTS: 
+	ARGUMENTS:
 	- HINSTANCE hInstance -> Instance of the window
 	- LPWSTR lpCmdLine -> Command line
 	- int nCmdShow -> Number or arguments
@@ -90,9 +112,5 @@ public:
 	*/
 	virtual void Release(void) final;
 };
-/*
-USAGE:
-ARGUMENTS: ---
-OUTPUT: ---
-*/
+
 #endif //__APPLICATION_H_

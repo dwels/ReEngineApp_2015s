@@ -1,7 +1,7 @@
 #include "AppClass.h"
 void AppClass::InitWindow(String a_sWindowName)
 {
-	super::InitWindow("SLERP - YOUR USER NAME GOES HERE"); // Window Name
+	super::InitWindow("SLERP - dwe5866"); // Window Name
 
 	//Setting the color to black
 	m_v4ClearColor = vector4(0.0f);
@@ -22,6 +22,11 @@ void AppClass::InitVariables(void)
 
 	//Setting the days duration
 	m_fDay = 1.0f;
+
+	//setting matricies for the sun, moon, and earth
+	m_m4Sun = IDENTITY_M4;
+	m_m4Earth = IDENTITY_M4;
+	m_m4Moon = IDENTITY_M4;
 }
 
 void AppClass::Update(void)
@@ -48,9 +53,16 @@ void AppClass::Update(void)
 	float fMoonHalfOrbTime = 14.0f * m_fDay; //Moon's orbit is 28 earth days, so half the time for half a route
 
 	//Setting the matrices
-	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Sun");
-	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Earth");
-	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Moon");
+	m_pMeshMngr->SetModelMatrix(m_m4Sun, "Sun");
+	m_pMeshMngr->SetModelMatrix(m_m4Earth, "Earth");
+	m_pMeshMngr->SetModelMatrix(m_m4Moon, "Moon");
+
+	//scale the models
+	m_m4Sun = glm::scale(IDENTITY_M4, vector3(5.936f));
+	m_m4Earth = glm::scale(IDENTITY_M4, vector3(0.524f));
+	m_m4Moon = glm::scale(m_m4Earth, vector3(0.27f));
+
+
 
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
