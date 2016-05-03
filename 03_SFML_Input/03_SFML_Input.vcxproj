@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1EA67B6E-CAF1-4F2A-8FB5-99B5D30E3004}</ProjectGuid>
     <RootNamespace>03_SFML_Input</RootNamespace>
-    <ProjectName>03_SFML_Input</ProjectName>
+    <ProjectName>03_Input</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -105,6 +105,7 @@ xcopy "$(SolutionDir)include\RE\Shaders" "$(SolutionDir)_Binary\Shaders" /y</Com
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\WiiYourself\wiimote.h" />
     <ClInclude Include="..\res\Resource.h" />
     <ClInclude Include="AppClass.h" />
   </ItemGroup>
@@ -112,6 +113,7 @@ xcopy "$(SolutionDir)include\RE\Shaders" "$(SolutionDir)_Binary\Shaders" /y</Com
     <ResourceCompile Include="..\res\BTO.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\include\WiiYourself\wiimote.cpp" />
     <ClCompile Include="AppClass.cpp" />
     <ClCompile Include="AppClassControls.cpp" />
     <ClCompile Include="Main.cpp" />

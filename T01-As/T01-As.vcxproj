@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AA18B089-83AC-4904-8600-CD68E61EDC26}</ProjectGuid>
     <RootNamespace>T01A_Exam_Solution</RootNamespace>
-    <ProjectName>T01A_Exam_Solution</ProjectName>
+    <ProjectName>Ex01s_A_DEMO</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
