@@ -72,6 +72,29 @@ static matrix4 ToMatrix4(quaternion a_qInput)
 }
 
 /*
+USAGE: Will generate random numbers limited to the cap (inclusive)
+ARGUMENTS:
+	uint a_uMin -> lower cap (exclusive)
+	uint a_uMax -> upper cap (exclusive)
+OUTPUT: random number between 0 and a_uMax
+*/
+static double GenerateRandom(double a_uMin, double a_uMax)
+{
+	//Old way
+	//srand((unsigned)time(0));
+	//return (rand() % a_uMax);
+
+	if (a_uMin >= a_uMax)
+		a_uMax = a_uMin + 1;
+
+	//C++11 way
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<> dist(a_uMin, a_uMax);
+	return dist(gen);
+}
+
+/*
  ReleaseAllSingletons
 USAGE: Releases all ReEngine Singletons
 ARGUMENTS: ---

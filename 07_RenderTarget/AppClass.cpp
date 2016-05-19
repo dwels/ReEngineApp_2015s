@@ -117,7 +117,7 @@ void AppClass::Display(void)
 	else
 		m_pMeshMngr->RenderTexture(m_nDawingTexture);
 	
-	m_pMeshMngr->ResetRenderList(); //Reset the Render list after render
+	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
 }
 

@@ -208,6 +208,12 @@ namespace ReEng
 		*/
 		matrix4 GetCameraPlane(void);
 		/*
+		USAGE: Gets the space just under the mouse pointer
+		ARGUMENTS: ---
+		OUTPUT:
+		*/
+		matrix4 GetSpaceUnderMouse(void);
+		/*
 		USAGE: Translates the camera forward or backward
 		ARGUMENTS: 
 		OUTPUT: ---

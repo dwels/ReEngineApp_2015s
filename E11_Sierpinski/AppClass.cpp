@@ -3,6 +3,7 @@ void AppClass::InitWindow(String a_sWindowName)
 {
 	//Using Base InitWindow method
 	super::InitWindow("Instance Rendering");
+	m_v4ClearColor = vector4(REBLACK, 1.0f);
 }
 
 void AppClass::InitVariables(void)
@@ -27,19 +28,6 @@ void AppClass::InitVariables(void)
 
 	//Compiling the mesh
 	m_pMesh->CompileOpenGL3X();
-
-	m_nObjects = 100;
-
-	m_fMatrixArray = new float[m_nObjects * 16];
-
-	//const float* m4MVP = glm::value_ptr(IDENTITY_M4);
-
-	for (uint n = 0; n < m_nObjects; n++)
-	{
-		const float* m4MVP = glm::value_ptr(glm::translate( vector3(n* 2,0,0)));
-
-		memcpy(&m_fMatrixArray[n * 16], m4MVP, 16 * sizeof(float));
-	}
 }
 
 void AppClass::Update(void)
@@ -70,20 +58,17 @@ void AppClass::Update(void)
 
 void AppClass::Display(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the window
+	ClearScreen();
 	
 	//Matrices from the camera
 	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
 	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
 
-	//m_pMesh->Render(m4Projection, m4View, IDENTITY_M4);//Rendering nObjects
-	//for (uint i = 0; i < 100; i++) {}
-
-	m_pMesh->RenderList(m4Projection, m4View, m_fMatrixArray, m_nObjects);//Rendering nObjects
-
-
-	m_pMeshMngr->Render();
-
+	m_pMesh->Render(m4Projection, m4View, IDENTITY_M4);//Rendering nObjects
+													   //clear the screen
+	
+	m_pMeshMngr->Render(); //renders the render list
+	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
 }
 

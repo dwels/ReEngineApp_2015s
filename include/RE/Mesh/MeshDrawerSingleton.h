@@ -104,7 +104,7 @@ public:
 	ARGUMENTS: GLuint a_uGLIndex index of the texture in opengl (not in the texture manager)
 	OUTPUT: ---
 	*/
-	void RenderTexture(GLuint a_uGLIndex);
+	void RenderTexture(GLuint a_uGLIndex, vector3 a_v3Tint = vector3(1.0f));
 
 	/*
 	USAGE: Gets the total number of instances currently able to hold
@@ -195,7 +195,7 @@ public:
 	ARGUMENTS: ---
 	OUTPUT: ---
 	*/
-	void ResetList(void);
+	void ClearRenderList(void);
 
 private:
 	/*

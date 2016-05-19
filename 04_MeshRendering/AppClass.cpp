@@ -56,7 +56,7 @@ void AppClass::Display(void)
 	m_pMesh->Render(m_pCameraMngr->GetProjectionMatrix(), m_pCameraMngr->GetViewMatrix(), IDENTITY_M4);
 
 	m_pMeshMngr->Render(); //renders the render list
-	m_pMeshMngr->ResetRenderList(); //Reset the Render list after render
+	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
 }
 

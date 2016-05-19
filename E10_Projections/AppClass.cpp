@@ -45,7 +45,7 @@ void AppClass::Display(void)
 	m_pCylinder->Render(m_m4Projection, m_m4View, glm::translate(IDENTITY_M4, REAXISZ * -3.0f));
 
 	m_pMeshMngr->Render(); //renders the render list
-	m_pMeshMngr->ResetRenderList(); //Reset the Render list after render
+	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
 }
 

@@ -6,6 +6,7 @@ Date: 2015/06
 #define __SystemSingleton_H_
 
 #include "RE\System\FolderSingleton.h"
+#include <random>
 
 namespace ReEng
 {
@@ -38,48 +39,43 @@ class ReEngDLL SystemSingleton
 	std::vector<DWORD> m_lClock;//clocks list
 	
 public:
+	FolderSingleton* m_pFolder;
+	REOptions m_RenderingContext;
 	/*
-	
-	USAGE:
+	USAGE: Singleton accessor
 	ARGUMENTS:
 	OUTPUT:
 	*/
-	static SystemSingleton* GetInstance(); // Singleton accessor
-	/*
+	static SystemSingleton* GetInstance();
 	
-	USAGE:
+	/*
+	USAGE: Singleton Release
 	ARGUMENTS: ---
 	OUTPUT: ---
 	*/
-	static void ReleaseInstance(void); //Singleton Release
+	static void ReleaseInstance(void); 
 
-	// Application Name Property
 	/*
-	
 	USAGE:
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	String GetAppName(void);
-	//__declspec(property(get = GetAppName)) String ApplicationName;
 
-	// Window Borderless Property
 	/*
-	
 	USAGE:
 	ARGUMENTS:
 	OUTPUT: ---
 	*/
 	void SetWindowBorderless(bool a_bBorderless = true);
-	/*
 	
+	/*
 	USAGE:
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	bool IsWindowBorderless(void);
 
-	 
 	/*
 	USAGE: Will set the window to fullscreen mode in the desired resolution
 	ARGUMENTS:
@@ -108,161 +104,128 @@ public:
 	OUTPUT: ---
 	*/
 	void SetWindowWidth(int a_nWidth);
-	/*
 	
+	/*
 	USAGE:
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	int GetWindowWidth(void);
-	//__declspec(property(get = GetWindowWidth, put = SetWindowWidth)) int WindowWidth;
 
-	// Window Height Property
 	/*
-	
 	USAGE:
 	ARGUMENTS:
 	OUTPUT: ---
 	*/
 	void SetWindowHeight(int a_nHeight);
-	/*
 	
+	/*
 	USAGE:
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	int GetWindowHeight(void);
-	//__declspec(property(get = GetWindowHeight, put = SetWindowHeight)) int WindowHeight;
-
-	// WindowX Property
-	/*
 	
+	/*
 	USAGE:
 	ARGUMENTS:
 	OUTPUT: ---
 	*/
 	void SetWindowX(int a_nX);
-	/*
 	
+	/*
 	USAGE:
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	int GetWindowX(void);
-	//__declspec(property(get = GetWindowX, put = SetWindowX)) int WindowX;
-
-	// WindowY Property
-	/*
 	
+	/*
 	USAGE:
 	ARGUMENTS:
 	OUTPUT: ---
 	*/
 	void SetWindowY(int a_nY);
-	/*
 	
+	/*
 	USAGE:
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	int GetWindowY(void);
-	//__declspec(property(get = GetWindowY, put = SetWindowY)) int WindowY;
-	
-	// Window Name Property
+		
 	/*
-	
 	USAGE:
 	ARGUMENTS:
 	OUTPUT:
 	*/
 	void SetWindowName(String a_sWindowName);
-	/*
 	
+	/*
 	USAGE:
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	String GetWindowName(void);
-	//__declspec(property(get = GetWindowName, put = SetWindowName)) String WindowName;
-
-	// Window Name Property
-	/* Sets the system to be multi-threaded <<<EXPERIMENTAL>>>*/
-	/*
 	
-	USAGE:
+	/*
+	USAGE:Sets the system to be multi-threaded <<<EXPERIMENTAL>>>
 	ARGUMENTS:
 	OUTPUT: ---
 	*/
 	void SetThreaded(bool a_bMultithreaded);
-	/* Asks the system if its multi-threaded*/
-	/*
 	
-	USAGE:
+	/*
+	USAGE: Asks the system if its multi-threaded
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	bool GetThreaded(void);
-	//__declspec(property(get = GetThreaded, put = SetThreaded)) bool Multithreaded;
-
-
-	// Asks for the value of m_bConsole
-	/*
 	
-	USAGE:
+	/*
+	USAGE: Asks for the value of m_bConsole
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	bool GetUsingConsole(void);
 
-	// Asks for the value of m_bConsole
 	/*
-	
-	USAGE:
+	USAGE: Asks for the value of m_bConsole
 	ARGUMENTS:
 	OUTPUT: ---
 	*/
 	void SetUsingConsole(bool a_bUsing);
 
 	/*
-	float GetWindowRatio(void);
-		This will return the proportions of the window size in the system, from bottom to top of the window the value is 1,
+	USAGE: This will return the proportions of the window size in the system, from bottom to top of the window the value is 1,
 		from left to right the value is the output of this function.
-	*/
-	/*
-	
-	USAGE:
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	float GetWindowRatio(void);
 
-	// WindowX Property
 	/*
-	
 	USAGE:
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
 	int GetFPS(void);
-	//__declspec(property(get = GetFPS)) int FPS;
-
-	/*
 	
-	USAGE:
+	/*
+	USAGE: Updates the current time
 	ARGUMENTS: ---
 	OUTPUT: ---
 	*/
-	void UpdateTime(void);//Updates the current time
-	//float LapClock(void);//Checks the time difference between startclock and current call
+	void UpdateTime(void);
+
 	/*
-	
-	USAGE:
+	USAGE: Checks the time difference between startclock and current call
 	ARGUMENTS:
 	OUTPUT: ---
 	*/
 	void StartClock(unsigned int a_nClock = 0);//Starts a time count for the specified clock
+	
 	/*
-	 LapClock
 	USAGE: Gets the time difference between the last time this method was called for this particular clock
 	ARGUMENTS:
 	OUTPUT:
@@ -270,69 +233,63 @@ public:
 	double LapClock(unsigned int a_nClock = 0);
 
 	/*
-	 AddClock
 	USAGE: Adds a clock to the list and return said clock's index
 	ARGUMENTS: ---
 	OUTPUT: uint -> index of the new clock;
 	*/
-	uint AddClock(void);
-
+	uint GenClock(void);
 
 	/*
-	
-	USAGE:
+	USAGE: returns true when the count is up, only one clock available
 	ARGUMENTS:
+		float a_fTime -> total time to countdown
+		bool a_bRepeat = false -> repeat the count once its done?
 	OUTPUT:
 	*/
-	bool CountDown(float a_fTime, bool a_bRepeat = false);//counts down on the specified clock, returns true when the count is up
-
-	FolderSingleton* m_pFolder;
-	REOptions m_RenderingContext;
+	bool CountDown(float a_fTime, bool a_bRepeat = false);
 
 private:
 	/*
-	
-	USAGE:
+	USAGE: Constructor
 	ARGUMENTS: ---
 	OUTPUT:
 	*/
-	SystemSingleton(void); // Constructor
-	/*
-	
-	USAGE:
-	ARGUMENTS:
-	OUTPUT:
-	*/
-	SystemSingleton(SystemSingleton const& other); //Copy Constructor
-	/*
-	
-	USAGE:
-	ARGUMENTS:
-	OUTPUT:
-	*/
-	SystemSingleton& operator=(SystemSingleton const& other); // Copy Assignment Operator
-	/*
-	
-	USAGE:
-	ARGUMENTS: ---
-	OUTPUT: ---
-	*/
-	~SystemSingleton(void); // Destructor
+	SystemSingleton(void);
 
 	/*
-	
-	USAGE:
-	ARGUMENTS: ---
-	OUTPUT: ---
+	USAGE: Copy Constructor
+	ARGUMENTS:
+	OUTPUT:
 	*/
-	void Release(void); // Release Memory
+	SystemSingleton(SystemSingleton const& other);
+	
 	/*
+	USAGE: Copy Assignment Operator
+	ARGUMENTS:
+	OUTPUT:
+	*/
+	SystemSingleton& operator=(SystemSingleton const& other);
 	
-	USAGE:
+	/*
+	USAGE: Destructor
 	ARGUMENTS: ---
 	OUTPUT: ---
 	*/
-	void Init(void); // Initialize variables
+	~SystemSingleton(void);
+
+	/*
+	USAGE: Release Memory
+	ARGUMENTS: ---
+	OUTPUT: ---
+	*/
+	void Release(void);
+	
+	/*
+	USAGE: Initialize variables
+	ARGUMENTS: ---
+	OUTPUT: ---
+	*/
+	void Init(void);
 };
 
 }

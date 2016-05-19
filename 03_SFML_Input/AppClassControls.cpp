@@ -73,7 +73,7 @@ void AppClass::ProcessMouse(void)
 }
 void AppClass::ProcessJoystick(void)
 {
-	static uint uClock = m_pSystem->AddClock();
+	static uint uClock = m_pSystem->GenClock();
 
 	static float fPitchLast = 0.0f;
 	static float fRollLast = 0.0f;

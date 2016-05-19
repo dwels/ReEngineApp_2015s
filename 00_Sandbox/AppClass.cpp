@@ -7,7 +7,7 @@ void AppClass::InitWindow(String a_sWindowName)
 	//if this line is in Init Application it will depend on the .cfg file, if it
 	//is on the InitVariables it will always force it regardless of the .cfg
 	m_v4ClearColor = vector4(0.4f, 0.6f, 0.9f, 0.0f);
-	//m_pSystem->SetWindowResolution(RESOLUTIONS::HD_1280X720);
+	m_pSystem->SetWindowResolution(RESOLUTIONS::C_1280x720_16x9_HD);
 	//m_pSystem->SetWindowFullscreen(); //Sets the window to be fullscreen
 	//m_pSystem->SetWindowBorderless(true); //Sets the window to not have borders
 }
@@ -44,6 +44,7 @@ void AppClass::Update(void)
 	m_pMeshMngr->SetModelMatrix(ToMatrix4(m_qArcBall), 0);
 	
 	//Adds all loaded instance to the render list
+	m_pMeshMngr->AddSkyboxToRenderList();
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
 	//Indicate the FPS
@@ -65,9 +66,9 @@ void AppClass::Display(void)
 	//clear the screen
 	ClearScreen();
 	//Render the grid based on the camera's mode:
-	m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
+	//m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
 	m_pMeshMngr->Render(); //renders the render list
-	m_pMeshMngr->ResetRenderList(); //Reset the Render list after render
+	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
 }
 

@@ -31,8 +31,8 @@ void main()
 	UV = UV_b.xy;
 	Color = Color_b;
 
-	Position_W =	(m4ModelToWorld * vec4(Position_b,1)).xyz;
-	Normal_W =		(m4ModelToWorld * vec4(Normal_b,0)).xyz;
-	Tangent_W =		(m4ModelToWorld * vec4(Tangent_b, 0.0)).xyz;
-	Binormal_W =	(m4ModelToWorld * vec4(Binormal_b, 0.0)).xyz;
+	Position_W =	(m4ToWorld[gl_InstanceID] * vec4(Position_b,1)).xyz;
+	Normal_W =		(m4ToWorld[gl_InstanceID] * vec4(Normal_b,0)).xyz;
+	Tangent_W =		(m4ToWorld[gl_InstanceID] * vec4(Tangent_b, 0.0)).xyz;
+	Binormal_W =	(m4ToWorld[gl_InstanceID] * vec4(Binormal_b, 0.0)).xyz;
 }

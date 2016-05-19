@@ -173,6 +173,15 @@ namespace ReEng
 		OUTPUT: plane just in front of the camera
 		*/
 		matrix4 GetCameraPlane(int a_nIndex = -1);
+
+		/*
+		USAGE: Gets the space just in under the pointer
+		ARGUMENTS:
+		- int a_nIndex = -1 -> index of the camera, -1 will return the active camera
+		OUTPUT: space in under the camera
+		*/
+		matrix4 GetSpaceUnderMouse(int a_nIndex = -1);
+
 		/*
 		USAGE: Gets the camera pointer specified by index
 		ARGUMENTS:

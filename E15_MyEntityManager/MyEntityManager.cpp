@@ -123,7 +123,7 @@ void MyEntityManager::Update(void)
 {
 	//Get the time difference
 	SystemSingleton* m_pSystem = SystemSingleton::GetInstance();
-	static int nClock = m_pSystem->AddClock();
+	static int nClock = m_pSystem->GenClock();
 	float fDeltaTime = static_cast<float>(m_pSystem->LapClock(nClock));
 	//Get a Copy of the current forces and positions, then update the entities
 	std::vector<vector3> lForceLast;

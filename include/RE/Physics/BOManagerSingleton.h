@@ -70,6 +70,13 @@ public:
 	*/
 	BoundingObjectClass* GetBoundingObject(uint a_nIndex);
 	/*
+	USAGE: returns the element specified by the index name (instance from, the mesh manager)
+	ARGUMENTS:
+	- String a_sName -> Index of the object in the manager
+	OUTPUT: BoundingObjectClass* from the list
+	*/
+	BoundingObjectClass* GetBoundingObject(String a_sInstanceName);
+	/*
 	USAGE: Checks if there is a collision between these 2 objects and marks it in their lists
 	ARGUMENTS:
 	- uint a_nIndexA -> Index of the first object

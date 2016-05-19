@@ -2,11 +2,6 @@
 void AppClass::InitWindow(String a_sWindowName)
 {
 	super::InitWindow("Octree"); // Window Name
-
-	// Set the clear color based on Microsoft's CornflowerBlue (default in XNA)
-	//if this line is in Init Application it will depend on the .cfg file, if it
-	//is on the InitVariables it will always force it regardless of the .cfg
-	m_v4ClearColor = vector4(0.4f, 0.6f, 0.9f, 0.0f);
 }
 
 void AppClass::InitVariables(void)
@@ -83,7 +78,7 @@ void AppClass::Display(void)
 	//Render the grid based on the camera's mode:
 	m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
 	m_pMeshMngr->Render(); //renders the render list
-	m_pMeshMngr->ResetRenderList(); //Reset the Render list after render
+	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
 }
 

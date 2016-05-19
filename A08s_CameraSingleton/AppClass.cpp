@@ -85,7 +85,7 @@ void AppClass::Display(void)
 	
 	m_pCone->Render(m_pCamera->GetProjectionMatrix(), m_pCamera->GetViewMatrix(), ToMatrix4(m_qArcBall));
 	m_pMeshMngr->Render(); //Render the list of objects
-	m_pMeshMngr->ResetRenderList(); //Reset the render list
+	m_pMeshMngr->ClearRenderList(); //Reset the render list
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
 }
 

@@ -2692,7 +2692,13 @@ bool wiimote::PlaySample (const wiimote_sample &sample, BYTE volume,
 	// Write 0x08 to register 0x04a20001 
 	WriteData(0x04a20001, 0x08);
 	// Write 7-byte configuration to registers 0x04a20001-0x04a20008 
-	BYTE bytes[7] = { 0x00, 0x00, 0x00, 10+(BYTE)freq, volume, 0x00, 0x00 };
+	BYTE bytes[7] = {	static_cast<BYTE>(0x00), 
+						static_cast<BYTE>(0x00),
+						static_cast<BYTE>(0x00),
+						static_cast<BYTE>(10+(BYTE)freq), 
+						volume,
+						static_cast<BYTE>(0x00),
+						static_cast<BYTE>(0x00) };
 	WriteData(0x04a20001, sizeof(bytes), bytes);
 	// + Write 0x01 to register 0x04a20008 
 	WriteData(0x04a20008, 0x01);
